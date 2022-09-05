@@ -1,0 +1,170 @@
+<?php require VIEWS_PATH . '/includes/header.phtml';?>
+<div class="row mb30">
+	<div class="col-md-12">
+		<h2>Dados do Cartão para Compra</h2>
+	</div>
+
+    <div class="col-md-12 message"></div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<form action="" method="post">
+			<div class="row">
+
+				<div class="col-md-2 brand">
+				</div>
+
+				<div class="form-group col-md-12">
+					<label>Número do Cartão</label>
+					<input type="text" class="form-control" name="card_number">
+                    <input type="hidden" name="card_brand">
+				</div>
+
+				<div class="form-group col-md-12">
+					<label>Nome no Cartão</label>
+					<input type="text" class="form-control" name="card_name">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label>Mês Expiração</label>
+					<input type="text" class="form-control" name="card_month">
+				</div>
+
+				<div class="form-group col-md-6">
+					<label>Ano Expiração</label>
+					<input type="text" class="form-control" name="card_year">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-4">
+					<label>Código de Segurança</label>
+					<input type="text" class="form-control" name="card_cvv">
+				</div>
+
+				<div class="col-md-12 installments">
+				</div>
+			</div>
+
+            <div class="row">
+                <div class="form-group col-md-12 text-center">
+                    <button class="btn btn-lg btn-success sendPayment">Realizar Pagamento</button>
+                </div>
+            </div>
+		</form>
+	</div>
+</div>
+
+<script src="<?=HOME;?>/assets/js/jquery.ajax.js"></script>
+<script>
+	let cardNumber = document.querySelector('input[name=card_number]');
+	let divBrand   = document.querySelector('div.brand');
+
+	cardNumber.addEventListener('keyup', function(){
+		if(cardNumber.value.length > 6) {
+		    PagSeguroDirectPayment.getBrand({
+			    cardBin: cardNumber.value.substr(0, 6),
+			    success: function(res) {
+					divBrand.innerHTML = '<img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/' + res.brand.name + '.png" alt="">';
+					getInstallments(<?=$this->totalCart;?>, res.brand.name);
+					document.querySelector('input[name=card_brand]').value = res.brand.name;
+			    },
+			    error: function(err) {
+					console.log(err);
+			    },
+			    complete: function(res) {
+
+			    }
+		    });
+		}
+	});
+
+
+    let btnSendPayment = document.querySelector('button.sendPayment');
+
+    btnSendPayment.addEventListener('click', function(e){
+        e.preventDefault();
+
+        this.disabled = true;
+        this.innerText = 'Carregando...';
+
+        PagSeguroDirectPayment.createCardToken({
+            cardNumber: document.querySelector('input[name=card_number]').value,
+            brand: document.querySelector('input[name=card_brand]').value,
+            cvv: document.querySelector('input[name=card_cvv]').value,
+            expirationMonth: document.querySelector('input[name=card_month]').value,
+            expirationYear: document.querySelector('input[name=card_year]').value,
+            success: function(d) {
+                proccessPayment(d.card.token, PagSeguroDirectPayment.getSenderHash());
+            }, error: function(e) {
+                console.log(e);
+            }
+        });
+    });
+
+    function proccessPayment(cardToken, senderHash)
+    {
+        let data = {
+            'card_name': document.querySelector('input[name=card_name]').value,
+            'card_token': cardToken,
+            'hash': senderHash,
+            'installments': document.querySelector('select.selectInstallments').value,
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/checkout/proccess',
+            data: data,
+            dataType: 'json',
+            success: function(res) {
+                document.querySelector('div.message').innerHTML = showMessage(res.data.message, 'success');
+
+                window.location.href = `/checkout/thanks?ref=${res.data.ref_order}`;
+            }
+        });
+
+    }
+
+	function getInstallments(amount, brand) {
+		PagSeguroDirectPayment.getInstallments({
+			amount: amount,
+			brand: brand,
+			maxInstallmentNoInterest: 0,
+			success: function(res) {
+			    let selectInstallments = drawSelectInstallments(res.installments[brand]);
+
+			    document.querySelector('div.installments').innerHTML = selectInstallments;
+			},
+			error: function(error) {
+
+			},
+			complete: function(res) {
+
+			}
+		});
+	}
+
+    function drawSelectInstallments(installments) {
+		let select = '<label>Opções de Parcelamento:</label>';
+
+		select += '<select class="form-control selectInstallments">';
+
+		for(let l of installments) {
+		    select += `<option value="${l.quantity}|${l.installmentAmount}">${l.quantity}x de ${l.installmentAmount} - Total fica ${l.totalAmount}</option>`;
+		}
+
+
+		select += '</select>';
+
+		return select;
+	}
+
+	function showMessage(message, messageType) {
+        return `
+            <div class="alert alert-${messageType}">${message}</div>
+        `;
+    }
+</script>
+<?php require VIEWS_PATH . '/includes/footer.phtml';?>

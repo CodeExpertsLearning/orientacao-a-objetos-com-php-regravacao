@@ -1,0 +1,10 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Code\\": "src/"
+    }
+  },
+  "require": {
+    "ausi/slug-generator": "^1.1"
+  }
+}

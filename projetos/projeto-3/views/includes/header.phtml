@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Projeto 3 - Gerenciador Pessoal de Gastos</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Code Experts Learning - GPG</a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li class="active">
+					<a href="<?=HOME;?>/">Home</a>
+				</li>
+                <li>
+                    <a href="<?=HOME;?>/myexpenses">Minhas Despesas</a>
+                </li>
+				<?php if(\Code\Session\Session::has('user')): ?>
+                    <li>
+                        <a href="<?=HOME;?>/auth/logout">Deslogar</a>
+                    </li>
+                <?php else: ?>
+                    <li>
+                        <a href="<?=HOME;?>/auth/login">Login</a>
+                    </li>
+				<?php endif;?>
+            </ul>
+		</div><!--/.nav-collapse -->
+	</div><!--/.container-fluid -->
+</nav>

@@ -1,0 +1,42 @@
+<?php require VIEWS_PATH . 'includes/header.phtml';?>
+<div class="container">
+    <?php require VIEWS_PATH . '/includes/messages.phtml';?>
+
+    <div class="col-md-12">
+        <div class="nav nav-pills">
+            <?php foreach($this->categories as $c): ?>
+                <li>
+                    <a href="<?=HOME . '/category/' . $c['slug'];?>"><?=$c['name'];?></a>
+                </li>
+            <?php endforeach;?>
+        </div>
+    </div>
+    <hr>
+    <div class="jumbotron">
+        <h1>Blog</h1>
+        <p>
+            Projeto 4 criado no curso PHP Orientado a Objetos da Code Experts Learning.
+        </p>
+        <p>
+            <a class="btn btn-lg btn-primary" href="http://bit.ly/ce-learn" role="button">Saiba mais &raquo;</a>
+        </p>
+    </div>
+
+    <div class="row">
+        <?php foreach($this->posts as $post): ?>
+            <div class="col-md-4">
+                <h2>
+                    <a href="<?=HOME . '/post/' . $post['slug'];?>">
+	                    <?=$post['title'];?>
+                    </a>
+                </h2>
+                <small>Criado em <?=date('d/M/Y H:i:s', strtotime($post['created_at']));?></small>
+                <p>
+	                <?=$post['description'];?>
+                </p>
+            </div>
+        <?php endforeach;?>
+    </div>
+
+</div>
+<?php require VIEWS_PATH . 'includes/footer.phtml';?>

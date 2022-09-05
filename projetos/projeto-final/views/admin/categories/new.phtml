@@ -1,0 +1,29 @@
+<?php require VIEWS_PATH . '/admin/includes/header.phtml';?>
+
+<div class="container">
+
+    <div class="col-md-12">
+		<?php require VIEWS_PATH . 'includes/messages.phtml';?>
+    </div>
+
+	<div class="col-md-12">
+		<h1>Categories - <small>Cadastrar nova categoria</small></h1>
+		<hr>
+	</div>
+	<div class="col-md-12">
+		<form method="post" action="<?=HOME;?>/admin/categories/new">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Nome</label>
+				<input type="text" name="name" class="form-control">
+			</div>
+
+			<div class="form-group">
+				<label for="exampleInputPassword1">Descrição</label>
+				<textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
+			</div>
+
+            <button type="submit" class="btn btn-success btn-lg pull-right">Salvar Categoria</button>
+		</form>
+	</div>
+</div>
+<?php require VIEWS_PATH . '/admin/includes/footer.phtml';?>

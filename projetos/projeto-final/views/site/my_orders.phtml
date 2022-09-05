@@ -1,0 +1,48 @@
+<?php require VIEWS_PATH . '/includes/header.phtml';?>
+<div class="row">
+	<div class="col-md-12">
+		<h2>Meus pedidos</h2>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="accordion" id="accordionExample">
+
+			<?php foreach($this->userOrders as $key => $order): ?>
+			<div class="card">
+				<div class="card-header" id="headingOne">
+					<h2 class="mb-0">
+						<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<?=$key;?>" aria-expanded="true" aria-controls="collapseOne">
+							Pedido nº: <strong><?=$order['reference'];?></strong>
+						</button>
+					</h2>
+				</div>
+
+				<div id="collapse<?=$key;?>" class="collapse <?php if($key == 0): ?> show <?php endif;?>" aria-labelledby="headingOne" data-parent="#accordionExample">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<?php $status = showBadgeByPagSeguroStatus($order['pagseguro_status']);?>
+								Pedido realizado em <?=date('d/m/Y H:i:s', strtotime($order['created_at']));?> | Status: <span class="badge badge-<?=$status['class'];?>"><?=$status['status_text'];?></span>
+								<hr>
+							</div>
+						</div>
+						<h4>Items deste pedido: </h4>
+						<ul>
+							<?php foreach(unserialize($order['items']) as $item):?>
+								<li><?=$item['name'];?> - R$ <?=number_format($item['price'], 2, ',', '.');?></li>
+							<?php endforeach;?>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<?php endforeach;?>
+
+		</div>
+
+	</div>
+</div>
+
+<!-- Aqui vamos colocar os pedidos na proxima aula -->
+<?php require VIEWS_PATH . '/includes/footer.phtml';?>

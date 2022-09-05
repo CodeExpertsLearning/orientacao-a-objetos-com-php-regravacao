@@ -1,0 +1,46 @@
+<?php require VIEWS_PATH . '/admin/includes/header.phtml';?>
+<div class="container">
+	<div class="col-md-12">
+		<h1>
+            Usuário - <small>Gerencie seus usuários</small>
+            <a href="<?=HOME . '/users/new';?>" class="btn btn-success pull-right">Criar Novo Usuário</a>
+        </h1>
+		<hr>
+	</div>
+
+    <div class="col-md-12">
+	    <?php require VIEWS_PATH . 'includes/messages.phtml';?>
+    </div>
+
+	<div class="col-md-12">
+		<table class="table">
+			<thead>
+			<tr>
+				<th>#</th>
+				<th>Titulo</th>
+				<th>Criado em</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			<?php foreach($this->posts as $p):?>
+			<tr>
+				<td><?=$p['id'];?></td>
+				<td><?=$p['first_name'];?></td>
+				<td><?=date('d/m/Y H:i:s', strtotime($p['created_at']));?></td>
+				<td>
+					<a href="<?=HOME;?>/users/edit/<?=$p['id'];?>" class="btn btn-default">
+						Editar
+					</a>
+					<a href="<?=HOME;?>/users/remove/<?=$p['id'];?>" class="btn btn-danger">
+						Excluir
+					</a>
+				</td>
+			</tr>
+			<?php endforeach;?>
+			</tbody>
+		</table>
+	</div>
+
+</div>
+<?php require VIEWS_PATH . '/admin/includes/footer.phtml';?>

@@ -1,0 +1,12 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Code\\": "src/"
+    },
+    "files": ["helpers/functions.php"]
+  },
+  "require": {
+    "ausi/slug-generator": "^1.1",
+    "pagseguro/pagseguro-php-sdk": "^6.0"
+  }
+}

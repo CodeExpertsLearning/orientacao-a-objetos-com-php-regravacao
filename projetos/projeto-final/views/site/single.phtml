@@ -1,0 +1,64 @@
+<?php require VIEWS_PATH . '/includes/header.phtml';?>
+<div class="row">
+
+    <div class="col-md-12">
+       <?php require VIEWS_PATH . '/includes/messages.phtml';?>
+    </div>
+
+    <div class="col-12">
+        <h2><?=$this->product['name'];?></h2>
+        <hr>
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-6">
+        <div class="col-12">
+            <?php if($this->lgPhoto['image']): ?>
+                <img src="<?=HOME;?>/uploads/products/<?=$this->lgPhoto['image'];?>" alt="Foto do Produto <?=$this->product['name'];?>" class="img-fluid">
+            <?php else: ?>
+                <img alt="Card image cap" src="https://placeimg.com/640/280/any" class="card-img-top img-fluid">
+            <?php endif;?>
+        </div>
+
+       <div class="row">
+	       <?php foreach($this->product['images'] as $image): ?>
+               <div class="col-2">
+	               <?php if($image['image']): ?>
+                       <img src="<?=HOME;?>/uploads/products/<?=$image['image'];?>" alt="Foto do Produto <?=$this->product['name'];?>" class="img-fluid">
+	               <?php else: ?>
+                       <img alt="Card image cap" src="https://placeimg.com/640/280/any" class="card-img-top img-fluid">
+	               <?php endif;?>
+               </div>
+	       <?php endforeach;?>
+       </div>
+        
+    </div>
+    <div class="col-6">
+        <p>
+            <?=$this->product['content'];?>
+        </p>
+        <p>
+            <h4>R$ <?=number_format($this->product['price'], 2, ',', '.');?></h4>
+        </p>
+        <p>
+            <form action="<?=HOME;?>/cart/add" method="post">
+                
+                <input type="hidden" name="name" value="<?=$this->product['name'];?>">
+                <input type="hidden" name="price" value="<?=$this->product['price'];?>">
+                <input type="hidden" name="slug" value="<?=$this->product['slug'];?>">
+
+                <div class="form-group col-3">
+                    <label>Quantidade</label>
+                    <input type="number" name="qtd" value="1" class="form-control">
+                </div>
+
+                <button class="btn btn-lg btn-danger" type="submit">
+                    Adicionar no carrinho
+                </button>
+
+            </form>
+        </p>
+    </div>
+</div>
+<?php require VIEWS_PATH . '/includes/footer.phtml';?>

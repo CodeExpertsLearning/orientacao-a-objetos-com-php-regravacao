@@ -1,0 +1,76 @@
+<?php require VIEWS_PATH . '/includes/header.phtml';?>
+<div class="row">
+    <div class="col-12">
+        <?php require VIEWS_PATH . '/includes/messages.phtml';?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h2>Carrinho</h2>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <?php if(!is_null($this->cart)): ?>
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $total = 0;
+
+                foreach($this->cart as $c): ?>
+                    <tr>
+                        <td><?=$c['name'];?></td>
+                        <td>R$ <?=number_format($c['price'], 2,',', '.');?></td>
+                        <td>
+                            <?=$c['qtd'];?>
+                        </td>
+                        <td>
+                            <?php $subtotal = $c['qtd'] * $c['price'];?>
+                            R$ <?=number_format($subtotal, 2,',', '.');?>
+                        </td>
+                        <td>
+                            <a href="<?=HOME;?>/cart/remove/<?=$c['slug'];?>" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                <?php 
+                    $total += $subtotal;
+                    endforeach;
+                ?>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-left">Total: R$ <?=number_format($total, 2,',', '.');?></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12">
+         <a href="<?=HOME;?>/cart/cancel" class="btn-lg btn btn-danger">Cancelar Compra</a>
+         <a href="<?=HOME;?>/checkout" class="btn-lg btn btn-success float-right">Finalizar Compra</a>
+    </div>
+    <?php else: ?>
+            <div class="col-12">
+                <div class="alert alert-warning">
+                        Carrinho vazio...
+                </div>
+            </div>
+    <?php endif;?>
+</div>
+
+<?php require VIEWS_PATH . '/includes/footer.phtml';?>

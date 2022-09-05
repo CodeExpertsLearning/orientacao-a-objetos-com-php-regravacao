@@ -1,0 +1,22 @@
+</div>
+<div class="container text-center">
+	<hr>
+	Code Experts Learning Projeto &copy; Todos os Direitos Reservados - <?=date('Y');?>
+</div>
+<?php if(\Code\Session\Session::has('pagseguro_session')):?>
+
+    <script src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+    <script>
+        const sessionId = '<?=\Code\Session\Session::get('pagseguro_session');?>';
+
+        PagSeguroDirectPayment.setSessionId(sessionId);
+    </script>
+
+<?php endif;?>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

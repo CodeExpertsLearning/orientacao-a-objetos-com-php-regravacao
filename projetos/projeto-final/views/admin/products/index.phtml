@@ -1,0 +1,55 @@
+<?php require VIEWS_PATH . '/admin/includes/header.phtml';?>
+	<div class="container">
+		<div class="col-md-12">
+			<h1>Produtos - <small>Gerencie seus produtos</small>
+				<a href="<?=HOME . '/admin/products/new';?>" class="btn btn-success pull-right">Criar Novo Produto</a>
+			</h1>
+			<hr>
+		</div>
+
+		<div class="col-md-12">
+			<?php require VIEWS_PATH . 'includes/messages.phtml';?>
+		</div>
+
+		<div class="col-md-12">
+			<table class="table">
+				<thead>
+				<tr>
+					<th>#</th>
+					<th>Nome</th>
+					<th>Preço</th>
+					<th>Status</th>
+					<th>Criado em</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php foreach($this->products as $p):?>
+					<tr>
+						<td><?=$p['id'];?></td>
+						<td><?=$p['name'];?></td>
+						<td><?=number_format($p['price'], 2, ',', '.');?></td>
+						<td>
+							<?php if($p['is_active']):?>
+								<span class="label label-success">Ativo</span>
+							<?php else: ?>
+								<span class="label label-danger">Inativo</span>
+							<?php endif;?>
+						</td>
+						<td><?=date('d/m/Y H:i:s', strtotime($p['created_at']));?></td>
+						<td>
+							<a href="<?=HOME;?>/admin/products/edit/<?=$p['id'];?>" class="btn btn-default">
+								Editar
+							</a>
+							<a href="<?=HOME;?>/admin/products/remove/<?=$p['id'];?>" class="btn btn-danger">
+								Excluir
+							</a>
+						</td>
+					</tr>
+				<?php endforeach;?>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+<?php require VIEWS_PATH . '/admin/includes/footer.phtml';?>

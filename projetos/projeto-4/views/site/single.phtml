@@ -1,0 +1,29 @@
+<?php require VIEWS_PATH . 'includes/header.phtml';?>
+<div class="container">
+    <div class="col-md-12">
+        <div class="col-md-7 pull-left">
+            <div class="row">
+                <h2><?=$this->post['title']?></h2>
+                <small>Criado em <?=date('d/M/Y H:i:s', strtotime($this->post['created_at']));?></small>
+                <hr>
+            </div>
+	        <?=$this->post['description'];?>
+        </div>
+
+        <div class="col-md-4 pull-right">
+            <div class="row">
+                <h3>Sidebar</h3>
+                <hr>
+            </div>
+            <div class="row content">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Consequuntur hic id magnam, molestias nam nihil nulla obcaecati
+                    placeat! At distinctio ducimus eaque iusto, magni quis suscipit.
+                    Nulla omnis quas repellat.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<?php require VIEWS_PATH . 'includes/footer.phtml';?>

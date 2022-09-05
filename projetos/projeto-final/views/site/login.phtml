@@ -1,0 +1,67 @@
+<?php require VIEWS_PATH . '/includes/header.phtml';?>
+
+<div class="row">
+    <div class="col-12">
+        <?php require VIEWS_PATH . '/includes/messages.phtml';?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h2>Registrar ou Logar</h2>
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6" style="border-right: 1px solid #CCC;">
+        <h3>Registrar</h3>
+        <form action="<?=HOME;?>/store/register" method="post">
+            <div class="form-group">
+                <label>Nome</label>
+                <input type="text" class="form-control" name="first_name">
+            </div>
+
+            <div class="form-group">
+                <label>Sobrenome</label>
+                <input type="text" class="form-control" name="last_name">
+            </div>
+            
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="text" class="form-control" name="email">
+            </div>
+            
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+
+            <div class="form-group">
+                <label>Confirmar Senha</label>
+                <input type="password" class="form-control" name="password_confirm">
+            </div>
+
+            <button class="btn btn-success">Cadastrar</button>
+        </form>
+    </div>
+    <div class="col-6">
+        <h3>Logar</h3>
+        <form action="<?=HOME;?>/store/login" method="post">
+            
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="text" class="form-control" name="email">
+            </div>
+            
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+
+            <button class="btn btn-success">Acessar</button>
+        </form>
+    </div>
+    
+   
+</div>
+<?php require VIEWS_PATH . '/includes/footer.phtml';?>

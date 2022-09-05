@@ -1,0 +1,27 @@
+<?php require VIEWS_PATH . '/includes/header.phtml';?>
+
+<div class="row" style="margin-bottom: 20px;">
+    <?php foreach ($this->products as $key => $product): ?>
+        <div class="col-md-4">
+            <div class="card">
+                <?php if($product['image']): ?>
+                    <img alt="Card image cap" src="<?=HOME;?>/uploads/products/<?=$product['image'];?>" class="card-img-top img-fluid">
+                <?php else: ?>
+                    <img alt="Card image cap" src="https://placeimg.com/640/280/any" class="card-img-top img-fluid">
+                <?php endif;?>
+                <div class="card-body">
+                    <h4 class="card-title"><?=$product['name'];?></h4>
+                    <p class="card-text">
+                    <?=$product['description'];?>
+                    </p>
+                    <h4>R$ <?=number_format($product['price'], 2, ',', '.');?></h4>
+                    <a href="<?=HOME;?>/product/view/<?=$product['slug'];?>" class="btn btn-success">Ver Mais</a>
+                </div>
+            </div>
+        </div>
+        <?php if (($key + 1) % 3 == 0): ?> </div><div class="row" style="margin-bottom: 20px;"> <?php endif;?>
+    <?php endforeach;?>
+</div>
+
+<?php require VIEWS_PATH . '/includes/footer.phtml';?>
+
